@@ -1,0 +1,37 @@
+lab_01: 
+znajdz czerwona kulke - stosując tylko getpixel(opencv) zaimplementuj wlasny sposób na wyszukanie.
+
+uzyty prompt: przyklad kodu python opencv z uzyciem petli get pixel i badanie koloru danego piksela w obrazku.
+odp gemini:
+import cv2
+
+# 1. Wczytanie obrazu
+# Zmień 'sciezka_do_obrazka.jpg' na własny plik
+image = cv2.imread('sciezka_do_obrazka.jpg')
+
+if image is None:
+    print("Nie można wczytać obrazu. Sprawdź ścieżkę.")
+    exit()
+
+# Pobranie wymiarów obrazu (wysokość, szerokość, liczba kanałów)
+height, width, channels = image.shape
+
+# 2. Iteracja po każdym pikselu za pomocą pętli (odpowiednik 'get pixel')
+for y in range(height):
+    for x in range(width):
+        # Pobranie koloru piksela (w formacie BGR)
+        b, g, r = image[y, x]
+        
+        # 3. Badanie koloru piksela
+        # Przykład: Szukamy pikseli, które są mocno czerwone
+        # (wysoka wartość czerwonego, niska zielonego i niebieskiego)
+        if r > 150 and g < 50 and b < 50:
+            # Działanie: Zamieniamy znaleziony czerwony piksel na zielony
+            image[y, x] = [0, 255, 0]  # Format BGR: [B=0, G=255, R=0]
+
+# 4. Wyświetlenie zmodyfikowanego obrazu
+cv2.imshow('Zmodyfikowany Obraz', image)
+
+# Oczekiwanie na naciśnięcie dowolnego klawisza przed zamknięciem okna
+cv2.waitKey(0)
+cv2.destroyAllWindows()
