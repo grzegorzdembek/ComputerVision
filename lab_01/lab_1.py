@@ -56,8 +56,7 @@ class Lab1: # zalozenie ze na ekranie jest tylko jedna czerwona kulka
             if (x - center_x)**2 + (y - center_y)**2 <= radius**2:
                 pixels_inside_circle += 1
 
-        circle_fit_ratio = pixels_inside_circle / pixel_count
-        if circle_fit_ratio >= 0.98:
+        if pixels_inside_circle / pixel_count >= 0.98:
             print("Wykryto czerwoną kulkę!")
             return True         
         else:
