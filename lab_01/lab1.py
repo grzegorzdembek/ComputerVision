@@ -65,10 +65,12 @@ class Lab1: # zalozenie ze na ekranie jest tylko jedna czerwona kulka
         
 if __name__ == "__main__":
     redball = Lab1(image="redBall.jpg")
+    perfectRedball = Lab1(image="perfectRedBall.jpg")
     redSquare = Lab1(image="redSquare.jpg")
     redOddity = Lab1(image="redOddity.jpg")
 
     redball.main()
+    perfectRedball.main()
     redSquare.main()
     redOddity.main()
 
