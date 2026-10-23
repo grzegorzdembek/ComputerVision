@@ -1,0 +1,3 @@
+buffer - lista na adresy w pamieci RAM dla kazdej ramki kamery.
+ring buffer - buffer (cykliczny), o stalej dlugosci, ktory w momencie wypelnienia calej tablicy przeskakuje na jej poczatek i usuwa najstarszy adres i wpisuje tam nowy.
+

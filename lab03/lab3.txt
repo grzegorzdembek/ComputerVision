@@ -1,0 +1,11 @@
+1) Wykorzystując opencv/gstreamer/... napisać program zbierający ramki kamery ale w sposób nie blokujący (wątek, callback np. z DX w IGrabber).
+
+2) Dodać callback/funkcję obsługi ramki (np. skala szarości, ...)
+
+3) Na ramce wyświetlić ile wyświetlamy FPS i ile gubimy ramek (też może być jako FPS)
+
+4) Do buforowania wykorzystać bufor cykliczny (implementacja albo wykorzystanie). Uwaga na safe-thread.
+
+5) Zrobić doświadczenie z buforem i jak zachowałby się program bez bufora (opóźnienie).
+
+6) Na ramce dodatkowo wyświetlić rozdzielczość obrazu oraz opóźnienie (o ile potrafimy wyliczyć)
