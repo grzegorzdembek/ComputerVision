@@ -43,8 +43,11 @@ class ThreadSafeCircularBuffer:
 class CameraGrabber:
     def __init__(self, src=0, buffer_capacity=30, use_buffer=True):
         self.cap = cv2.VideoCapture(src)
-        self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
+        self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+       
         self.use_buffer = use_buffer
         self.ring_buffer = ThreadSafeCircularBuffer(buffer_capacity)
 
@@ -118,7 +121,6 @@ def callback_grayscale(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     return cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
 
-
 blob_params = cv2.SimpleBlobDetector_Params()
 blob_params.filterByColor = True
 blob_params.blobColor = 0
@@ -138,7 +140,7 @@ blob_params.minInertiaRatio = 0.85
 
 detector_lab2 = cv2.SimpleBlobDetector_create(blob_params)
 
-def callback_lab2_red_ball(frame):
+def callback_lab2(frame):
     lower_red = np.array([0, 0, 150])
     upper_red = np.array([50, 50, 255])
 
@@ -157,14 +159,13 @@ def callback_lab2_red_ball(frame):
         )
     return frame
 
-
 def main():
     grabber = CameraGrabber(src=0, buffer_capacity=30, use_buffer=True).start()
 
     callbacks = [
-        ("Skala szarosci (Punkt 2)", callback_grayscale),
-        ("Detekcja czerwonej kulki (Twoj Lab 2)", callback_lab2_red_ball),
-        ("Brak (Oryginal)", lambda f: f),
+        ("Skala szarosci", callback_grayscale),
+        ("Lab 2", callback_lab2),
+        ("Brak ", lambda f: f),
     ]
     cb_idx = 1  
 
@@ -176,11 +177,11 @@ def main():
     total_dropped = 0
     t_metrics = time.perf_counter()
 
-    print("Sterowanie z klawiatury w oknie obrazu:")
-    print("  [b] - Przelacz: Bufor cykliczny (30 ramek) <-> Bez bufora")
-    print("  [c] - Przelacz callback (Skala szarosci / Lab 2 / Brak)")
-    print("  [+] - Zwieksz sztuczne opoznienie (+10 ms)")
-    print("  [-] - Zmniejsz sztuczne opoznienie (-10 ms)")
+    print("Sterowanie:")
+    print("  [b] - Bufor cykliczny (30 ramek) <-> Bez bufora")
+    print("  [c] - Skala szarosci <-> Lab 2 <-> Brak)")
+    print("  [+] - Zwieksz opoznienie (+10 ms)")
+    print("  [-] - Zmniejsz opoznienie (-10 ms)")
     print("  [q] - Wyjscie")
 
     while True:
@@ -221,7 +222,7 @@ def main():
             f"Rozdzielczosc: {w}x{h} px",
             f"Kamera FPS: {grabber.capture_fps:.1f} | Wyswietlane FPS: {display_fps:.1f}",
             f"Gubione FPS: {dropped_fps:.1f}/s (Lacznie zgubiono: {total_dropped})",
-            f"Opoznienie (Latency): {latency_ms:.1f} ms",
+            f"Opoznienie: {latency_ms:.1f} ms",
         ]
 
         overlay = processed_frame.copy()
@@ -235,7 +236,7 @@ def main():
                 cv2.FONT_HERSHEY_SIMPLEX, 0.52, color, 1, cv2.LINE_AA
             )
 
-        cv2.imshow("Lab 3 - Obsluga kamery", processed_frame)
+        cv2.imshow("Lab 3", processed_frame)
 
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
@@ -251,7 +252,6 @@ def main():
 
     grabber.stop()
     cv2.destroyAllWindows()
-
 
 if __name__ == "__main__":
     main()
