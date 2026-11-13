@@ -157,12 +157,12 @@ class Lab4:
         lab3 = Lab3()
 
         callbacks = [
-            ("Lab 4A: Hough (Kulka vs Obrecz)", self.callback_hough),
-            ("Lab 4B: Detekcja Grzbietow", self.callback_ridges_only),
-            ("Lab 4C: Grzbiety + Hough", self.callback_ridges_plus_hough),
-            ("Lab 1: Piksele + Rownanie kola", lab1.process_frame),
-            ("Lab 2: SimpleBlobDetector", lab2.process_frame),
-            ("Lab 3: Skala szarosci", lab3.callback_grayscale),
+            ("Hough (Kulka vs Obrecz)", self.callback_hough),
+            ("Detekcja Grzbietow", self.callback_ridges_only),
+            ("Grzbiety + Hough", self.callback_ridges_plus_hough),
+            ("Lab 1", lab1.process_frame),
+            ("Lab 2", lab2.process_frame),
+            ("Lab 3(greyscale)", lab3.callback_grayscale),
             ("Brak", lambda f: f),
         ]
 
