@@ -2,8 +2,8 @@ import cv2
 import threading
 import time
 
-from lab01.lab1 import Lab1
-from lab02.lab2 import Lab2
+from lab1 import Lab1
+from lab2 import Lab2
 
 # LAB3: CammeraGrabber with ThreadSafeRingBuffer 
 class Lab3:

@@ -1,7 +1,0 @@
-lab4: 
-Znajdź obręcz/kulkę za pomocą metody Hougha.
-Może być gotowa z OpenCV https://en.wikipedia.org/wiki/Hough_transform.
-Podpiąć pod kamerę (i pozostałe, wcześniejsze na próbę też).
-Propozycja implementacji wykrywania grzbietów.
-
-kod został wygenerowany przy uzyciu AI (Gemini).

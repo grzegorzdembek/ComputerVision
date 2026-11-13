@@ -1,3 +1,0 @@
-lab_02: 
-znajdz czerwona kulke wykorzystując mechanizmy opencv (blob detection) 
-
