@@ -1,0 +1,22 @@
+# Cache Pythona i srodowiska wirtualne
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Pliki edytorow i systemu
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dane treningowe i tymczasowe artefakty YOLO (generowane lokalnie)
+yolo_training/backgrounds/
+yolo_training/dataset/
+yolo_training/preview/
+yolo_training/runs/
+yolo_training/dataset.yaml
+yolo_training/*.pt
+
+# Bazowe wagi pobierane automatycznie w katalogu glownym
+yolo11n.pt
