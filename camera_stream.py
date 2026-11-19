@@ -3,48 +3,45 @@ import time
 
 import cv2 as cv
 
-
 class ThreadSafeRingBuffer:
     def __init__(self, capacity: int):
         self.capacity = max(1, capacity)
         self.buffer = [None] * self.capacity
-        self.head = 0  # odczyt - watek Konsumenta (runCamera)
-        self.tail = 0  # zapis - watek Producenta (CameraGrabber)
+        self.head = 0  
+        self.tail = 0  
         self.count = 0
         self.dropped_frames = 0
         self.lock = threading.Lock()
 
-    def put(self, item) -> None:  # watek Producenta
+    def put(self, item) -> None: 
         with self.lock:
             if self.count == self.capacity:
-                # bufor pelny: nadpisujemy najstarsza ramke i przesuwamy glowe (modulo zamyka petle)
                 self.head = (self.head + 1) % self.capacity
                 self.dropped_frames += 1
             else:
                 self.count += 1
 
-            self.buffer[self.tail] = item  # zapisana najnowsza ramka
+            self.buffer[self.tail] = item  
             self.tail = (self.tail + 1) % self.capacity
 
-    def get(self):  # watek Konsumenta
+    def get(self):  
         with self.lock:
             if self.count == 0:
                 return None
 
-            item = self.buffer[self.head]  # odczytana najstarsza ramka
+            item = self.buffer[self.head]  
             self.buffer[self.head] = None
             self.head = (self.head + 1) % self.capacity
             self.count -= 1
             return item
 
-    def getStatsAndResetDrops(self) -> tuple[int, int, int]:  # info do wyswietlenia na ekranie
+    def getStatsAndResetDrops(self) -> tuple[int, int, int]:  
         with self.lock:
             drops = self.dropped_frames
             self.dropped_frames = 0
             return drops, self.count, self.capacity
 
-
-class CameraGrabber:  # nie blokuje odczytywania ramek
+class CameraGrabber:  
     def __init__(
         self,
         camera_source: int = 0,
@@ -56,6 +53,7 @@ class CameraGrabber:  # nie blokuje odczytywania ramek
         self.capture = cv.VideoCapture(camera_source)
         self.capture.set(cv.CAP_PROP_FRAME_WIDTH, frame_width)
         self.capture.set(cv.CAP_PROP_FRAME_HEIGHT, frame_height)
+
         # zmniejszamy wewnetrzny bufor sterownika OpenCV do 1 klatki, aby uniknac ukrytych opoznien
         self.capture.set(cv.CAP_PROP_BUFFERSIZE, 1)
 
@@ -118,7 +116,7 @@ class CameraGrabber:  # nie blokuje odczytywania ramek
     def getDropStats(self) -> tuple[int, int, int]:
         if self.use_buffer:
             return self.ring_buffer.getStatsAndResetDrops()
-        with self.latest_lock:
+        with self.latest_lock: 
             drops = self.unbuffered_drops
             self.unbuffered_drops = 0
             buffer_fill = 1 if self.latest_frame is not None else 0

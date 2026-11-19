@@ -15,11 +15,10 @@ from detectors_classical import (
 )
 from vision_utils import drawHudOverlay, showImageResult
 
-
 def runCamera(window_title: str = "Real-Time Computer Vision Sandbox", start_callback_index: int = 0) -> None:
     grabber = CameraGrabber(camera_source=0, buffer_capacity=30, use_buffer=True).start()
 
-    # slownik z parametrami Lab 4 pozwala modyfikowac je z klawiatury w trakcie dzialania programu
+    # parametry Lab 4 pozwala modyfikowac je z klawiatury w trakcie dzialania programu
     hough_settings = {
         "hough_param_1": 100,
         "hough_param_2": 38,
@@ -54,7 +53,7 @@ def runCamera(window_title: str = "Real-Time Computer Vision Sandbox", start_cal
         ("Lab 1: Naiwna petla po pikselach", detectRedBallNaive),
         ("Lab 2: SimpleBlobDetector", detectRedBallBlob),
         ("Lab 3: Skala szarosci", convertToGrayscale),
-        ("Brak (surowy obraz)", lambda frame: frame.copy()),
+        ("Brak", lambda frame: frame.copy()),
     ]
 
     callback_index = start_callback_index % len(callbacks)
@@ -67,7 +66,7 @@ def runCamera(window_title: str = "Real-Time Computer Vision Sandbox", start_cal
     metrics_start_time = time.perf_counter()
 
     print("Sterowanie:")
-    print("  [c]   - Zmiana algorytmu (YOLO -> Hough 4A/4B/4C -> Naive -> Blob -> Grayscale -> Raw)")
+    print("  [c]   - Zmiana algorytmu (lab5 -> lab4 -> lab1 -> lab2 -> lab3 -> Raw)")
     print("  [b]   - Bufor cykliczny (30 ramek) <-> Bez bufora")
     print("  [w/s] - Prog akumulatora Hougha param2 (+5 / -5)")
     print("  [e/d] - Skala grzbietow Sigma (+0.5 / -0.5)")
@@ -140,7 +139,6 @@ def runCamera(window_title: str = "Real-Time Computer Vision Sandbox", start_cal
 
     grabber.stop()
     cv.destroyAllWindows()
-
 
 if __name__ == "__main__":
     # --- Test na pojedynczym pliku (odkomentuj do szybkiego testu) ---

@@ -5,11 +5,6 @@ import numpy as np
 
 from vision_utils import drawCircle, readImage
 
-
-# =====================================================================
-# LAB 1: NAIWNE WYKRYWANIE CZERWONEJ KULKI (PETLA PO PIKSELACH)
-# =====================================================================
-
 # algorytm z lab1: petla po pikselach + zal ze na ekranie jest jedna czerwona kulka
 def detectRedBallNaive(source: str | Path | np.ndarray) -> np.ndarray | None:
     image = readImage(source)
